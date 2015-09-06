@@ -2,30 +2,20 @@ var Search = React.createClass({
 
 	getInitialState: function () {
 		return {
-			initialItems: [
-				'Apples',
-				'Broccoli',
-				'Chicken',
-				'Duck',
-				'Eggs',
-				'Fish',
-				'Granola',
-				'Hash Browns',
-				'Coffee'
-			],
+			data: this.props.data,
 			items: []
-		}
+		};
 	},
 
 	componentWillMount: function () {
 		this.setState({
-			items: this.state.initialItems
+			items: this.props.data
 		});
 	},
 
-	searchList: function (event) {
+	search: function (event) {
 		var value = event.target.value.toLowerCase();
-		var items = this.state.initialItems;
+		var items = this.state.data;
 		var updatedList = items.filter(function(item) {
 			return item.toLowerCase().search(value) !== -1;
 		});
@@ -37,28 +27,25 @@ var Search = React.createClass({
 
 	render: function () {
 		return (
-			<div className="search">
-				<input type="search" placeholder="Search" onChange={this.searchList}/>
-				<Result items={this.state.items}/> 
-			</div>
+			<fieldset>
+				<input type="search" onChange={this.search} />
+
+				<Result items={this.state.items}/>
+			</fieldset>
 		);
 	}
-});
+});	
 
+var data = [
+	'Apples',
+	'Broccoli',
+	'Chicken',
+	'Duck',
+	'Eggs',
+	'Fish',
+	'Granola',
+	'Hash Browns',
+	'Coffee'
+];
 
-var Result = React.createClass({
-	render: function () {
-		return (
-			<ul>
-			{
-				this.props.items.map(function(item) {
-					return <li key={item}>{item}</li>
-				})
-			}
-			</ul>
-		)
-	}
-});
-
-
-React.render(<Search />, document.getElementById('mount-point'));
+React.render(<Search data={data}/>, document.getElementById('search'));
