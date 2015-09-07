@@ -1,5 +1,5 @@
-- [ ] Understand React, (State, Props) 
-- [ ] Make two simple apps in React
+- [x] Understand React, (State, Props) 
+- [x] Make some simple apps in React
 - [ ] Understand Flux, (Stores, Actions, Dispatcher)
 - [ ] Make a cart app using Flux
 - [ ] Rewrite all apps to ES6 using babel 
