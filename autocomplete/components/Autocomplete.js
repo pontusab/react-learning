@@ -1,46 +1,53 @@
 var Autocomplete = React.createClass({
 
+	componentWillMount: function() {
+		this.fetchData = _.debounce(this.fetchData, 250);
+    },
+
 	getInitialState: function() {
 	    return {
-    		data: [],
-    		items: []
+    		results: []
 	   	};
  	 },
 
-	componentDidMount: function () {
-		$.ajax({
-			url: this.props.url,
-			dataType: 'json',
-			cache: false,
-			success: function(data) {
-				if(this.isMounted()) {
-					this.setState({
-						data: data
-					});
-				}
-			}.bind(this)
-		});
+	search: function (event) {
+		var value = event.target.value;
+
+		if(value.length) {
+			this.fetchData(value)
+		} else {
+			this.setState({
+				results: []
+			});
+		}
 	},
 
-	search: function (event) {
-		var value = event.target.value.toLowerCase();
-		var items = this.state.data;
-		
+	fetchData: function (query) {
+		$.get(this.props.source, function(result) {
+			if (this.isMounted()) {
+				var matches = _(result).values().filter(function(countryName) {
+					return new RegExp('^'+ query,'i').test(countryName);
+				}).value();
 
-		// this.setState({
-		// 	items: updatedList
-		// });
-
+				this.setState({
+					results: matches
+				});
+			}
+		}.bind(this));
 	},
 
 	render: function () {
+		var results = this.state.results.length ? <Results items={this.state.results} /> : '';
+
+		console.log(results);
+
 		return (
-			<div>
-				<input type="search" onChange={this.search} />
+			<div className="search">
+				<input onChange={this.search} type="search"/>
+
+				{results}
 			</div>
 		)
 	}
+
 });
-
-
-React.render(<Autocomplete url="data/data.json" />, document.getElementById('app'));
