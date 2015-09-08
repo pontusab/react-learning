@@ -2,7 +2,41 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
 	<script src="components/Slider.js" type="text/jsx"></script>
+	<script src="components/App.js" type="text/jsx"></script>
+
+	<style type="text/css">
+		.slider {
+			max-width: 700px;
+			width: 100%;
+		}
+
+		img {
+			width: 100%;
+			height: auto;
+		}
+		ul {
+			width: 100%;
+			list-style: none;
+			padding: 0;
+		}
+
+		.active {
+			border-color: green;
+		}
+
+		li {
+			width: 20.99%;
+			margin: 0 0 0 5.3%;
+			display: inline-block;
+			border: 3px solid #000;
+			box-sizing: border-box;
+		}
+
+		li:first-child {
+			margin: 0;
+		}
+	</style>
 </head>
 
 
-<div id="slider"></div>
+<div id="app"></div>
